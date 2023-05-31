@@ -45,51 +45,37 @@ const defaultTodos = [
     id: 1,
     task: "Schedule the next meeting.",
     completed: false,
-    isOpen: false,
-    isHovered: false,
   },
   {
     id: 2,
     task: "Share the agenda with the person.",
     completed: false,
-    isOpen: false,
-    isHovered: false,
   },
   {
     id: 3,
     task: "Review previous meeting notes..",
     completed: false,
-    isOpen: false,
-    isHovered: false,
   },
 
   {
     id: 4,
     task: "Prepare any feedback or updates..",
     completed: false,
-    isOpen: false,
-    isHovered: false,
   },
   {
     id: 5,
     task: "Review progress on goals and projects.",
     completed: false,
-    isOpen: false,
-    isHovered: false,
   },
   {
     id: 6,
     task: "Ask challenges and discuss.",
     completed: false,
-    isOpen: false,
-    isHovered: false,
   },
   {
     id: 7,
     task: "Discuss needs or training opportunities.",
     completed: false,
-    isOpen: false,
-    isHovered: false,
   },
 ];
 
@@ -136,6 +122,74 @@ const Hoverable = ({ children, ...props }) => {
   );
 };
 
+const SwipeableContainer = ({ todo, todos, setTodos }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const handleDelete = (id) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
+  };
+  const toggleCheckbox = (id) => {
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    );
+    setTodos(updatedTodos);
+  };
+  const swipeFromRight = (id) => {
+    return (
+      <Button
+        h="$full"
+        p="$3"
+        bg="$error900"
+        borderRightRadius="$md"
+        onPress={() => handleDelete(id)}
+      >
+        <EvilIconsIcon name="trash" size={18} color="white" />
+      </Button>
+    );
+  };
+  return (
+    <Swipeable
+      key={todo.id}
+      onSwipeableOpen={(side) => {
+        setIsOpen(true);
+      }}
+      onSwipeableClose={(side) => {
+        setIsOpen(false);
+      }}
+      renderRightActions={() => {
+        return swipeFromRight(todo.id);
+      }}
+    >
+      <Hoverable
+        px="$6"
+        flexDirection="row"
+        // h="$10"
+        py="$2"
+        bg={isOpen ? "$backgroundDark700" : "$backgroundDark900"}
+        key={todo.id}
+        alignItems="center"
+      >
+        <Checkbox
+          label={todo.task}
+          checked={todo.completed}
+          onChange={() => toggleCheckbox(todo.id)}
+        />
+        <Txt
+          textDecorationLine={todo.completed ? "line-through" : "none"}
+          color="$textDark50"
+          ml="$2"
+          w="$full"
+          lineHeight="$md"
+          fontSize="$sm"
+          fontWeight="$normal"
+        >
+          {todo.task}
+        </Txt>
+      </Hoverable>
+    </Swipeable>
+  );
+};
+
 const getDay = () => {
   const currentDate = new Date();
   const daysOfWeek = [
@@ -167,43 +221,12 @@ const App = () => {
           id: Math.random(),
           task: item,
           completed: false,
-          isOpen: false,
-          isHovered: false,
         },
       ]);
       setItem("");
     }
   };
-  const toggleCheckbox = (id) => {
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    );
-    setTodos(updatedTodos);
-  };
-  const toggleIsOpen = (side, id, value) => {
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, isOpen: value } : todo
-    );
-    setTodos(updatedTodos);
-  };
-  const handleDelete = (id) => {
-    const updatedTodos = todos.filter((todo) => todo.id !== id);
-    setTodos(updatedTodos);
-  };
 
-  const swipeFromRight = (id) => {
-    return (
-      <Button
-        h="$full"
-        p="$3"
-        bg="$error900"
-        borderRightRadius="$md"
-        onPress={() => handleDelete(id)}
-      >
-        <EvilIconsIcon name="trash" size={18} color="white" />
-      </Button>
-    );
-  };
   const getCompletedTasks = () => {
     let complete = 0;
     todos.forEach((item) => {
@@ -266,7 +289,6 @@ const App = () => {
                 w: "$full",
               },
               "@md": {
-                //h: 700,
                 w: 700,
                 bg: "$backgroundDark900",
               },
@@ -287,50 +309,13 @@ const App = () => {
             </VStack>
 
             <VStack>
-              {todos.map((todo) => (
-                <Swipeable
-                  key={todo.id}
-                  onSwipeableOpen={(side) => {
-                    toggleIsOpen(side, todo.id, true);
-                  }}
-                  onSwipeableClose={(side) => {
-                    toggleIsOpen(side, todo.id, false);
-                  }}
-                  renderRightActions={() => {
-                    return swipeFromRight(todo.id);
-                  }}
-                >
-                  <Hoverable
-                    px="$6"
-                    flexDirection="row"
-                    // h="$10"
-                    py="$2"
-                    bg={
-                      todo.isOpen ? "$backgroundDark700" : "$backgroundDark900"
-                    }
-                    key={todo.id}
-                    alignItems="center"
-                  >
-                    <Checkbox
-                      label={item.task}
-                      checked={todo.completed}
-                      onChange={() => toggleCheckbox(todo.id)}
-                    />
-                    <Txt
-                      textDecorationLine={
-                        todo.completed ? "line-through" : "none"
-                      }
-                      color="$textDark50"
-                      ml="$2"
-                      w="$full"
-                      lineHeight="$md"
-                      fontSize="$sm"
-                      fontWeight="$normal"
-                    >
-                      {todo.task}
-                    </Txt>
-                  </Hoverable>
-                </Swipeable>
+              {todos.map((todo, index) => (
+                <SwipeableContainer
+                  key={index}
+                  todo={todo}
+                  todos={todos}
+                  setTodos={setTodos}
+                />
               ))}
             </VStack>
             <VStack px="$6">
