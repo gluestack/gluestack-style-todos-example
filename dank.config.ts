@@ -552,7 +552,7 @@ export const config = {
         borderDark200: '#e5e7eb',
         borderDark300: '#d1d5db',
         borderDark400: '#9ca3af',
-        borderDark500: '#6b7280',
+        borderDark500: '#737373',
         borderDark600: '#4b5563',
         borderDark700: '#374151',
         borderDark800: '#1f2937',
