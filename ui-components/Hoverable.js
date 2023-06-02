@@ -1,0 +1,25 @@
+import React, { useState } from "react";
+import { styled } from "@dank-style/react";
+import { Pressable } from "react-native";
+const StyledPressable = styled(Pressable, {});
+const Hoverable = ({ children, ...props }) => {
+  const [hover, setHover] = useState(false);
+  return (
+    <StyledPressable
+      states={{
+        hover,
+      }}
+      onHoverIn={() => setHover(true)}
+      onHoverOut={() => setHover(false)}
+      sx={{
+        ":hover": {
+          bg: "$backgroundDark700",
+        },
+      }}
+      {...props}
+    >
+      {children}
+    </StyledPressable>
+  );
+};
+export default Hoverable;
