@@ -1,0 +1,67 @@
+Arguments: 
+  /Users/eshu/.nvm/versions/node/v16.15.1/bin/node /Users/eshu/.yarn/releases/yarn-1.19.0.cjs
+
+PATH: 
+  /Users/eshu/.nvm/versions/node/v16.15.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
+
+Yarn version: 
+  1.19.0
+
+Node version: 
+  16.15.1
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/@dank-style%2fbabel-plugin-styled-resolver: Not found
+      at Request.params.callback [as _callback] (/Users/eshu/.yarn/releases/yarn-1.19.0.cjs:78448:18)
+      at Request.self.callback (/Users/eshu/.yarn/releases/yarn-1.19.0.cjs:134959:22)
+      at Request.emit (node:events:527:28)
+      at Request.<anonymous> (/Users/eshu/.yarn/releases/yarn-1.19.0.cjs:135931:10)
+      at Request.emit (node:events:527:28)
+      at IncomingMessage.<anonymous> (/Users/eshu/.yarn/releases/yarn-1.19.0.cjs:135853:12)
+      at Object.onceWrapper (node:events:641:28)
+      at IncomingMessage.emit (node:events:539:35)
+      at endReadableNT (node:internal/streams/readable:1345:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+
+npm manifest: 
+  {
+    "name": "todo-app",
+    "version": "1.0.0",
+    "main": "node_modules/expo/AppEntry.js",
+    "scripts": {
+      "start": "expo start",
+      "android": "expo start --android",
+      "ios": "expo start --ios",
+      "web": "expo start --web"
+    },
+    "dependencies": {
+      "@dank-style/react": "^0.4.9",
+      "@expo/webpack-config": "^18.0.1",
+      "@types/react": "~18.0.27",
+      "expo": "~48.0.15",
+      "expo-status-bar": "~1.4.4",
+      "react": "18.2.0",
+      "react-dom": "18.2.0",
+      "react-native": "0.71.8",
+      "react-native-gesture-handler": "^2.9.0",
+      "react-native-reanimated": "^3.1.0",
+      "react-native-svg": "^13.9.0",
+      "react-native-vector-icons": "^9.2.0",
+      "react-native-web": "~0.18.10",
+      "typescript": "^4.9.4"
+    },
+    "devDependencies": {
+      "@babel/core": "^7.20.0",
+      "@dank-style/babel-plugin-styled-resolver": "^0.3.5"
+    },
+    "private": true
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
