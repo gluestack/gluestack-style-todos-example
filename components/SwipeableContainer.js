@@ -5,8 +5,16 @@ import Txt from "../ui-components/Txt";
 import { Swipeable } from "react-native-gesture-handler";
 import Button from "../ui-components/Button";
 import EvilIconsIcon from "react-native-vector-icons/EvilIcons";
+import StyledPressable from "../ui-components/StyledPressable";
+import HStack from "../ui-components/HStack";
+import Input from "../ui-components/Input";
+import Box from "../ui-components/Box";
 const SwipeableContainer = ({ todo, todos, setTodos }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [lastTap, setLastTap] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
+  const [editItem, setEditItem] = useState(todo.task);
+  const inputRef = useRef(null);
   const handleDelete = (id) => {
     const updatedTodos = todos.filter((todo) => todo.id !== id);
     setTodos(updatedTodos);
@@ -17,6 +25,31 @@ const SwipeableContainer = ({ todo, todos, setTodos }) => {
     );
     setTodos(updatedTodos);
   };
+  const handleEdit = (id) => {
+    setIsEdit(false);
+    console.log("isEdit value", isEdit);
+    if (editItem != "") {
+      const updatedTodos = todos.map((todo) =>
+        todo.id === id ? { ...todo, item: editItem } : todo
+      );
+      setTodos(updatedTodos);
+    }
+  };
+  const handleDoubleTap = () => {
+    const now = Date.now();
+    if (!lastTap) {
+      setLastTap(now);
+    } else {
+      if (now - lastTap < 700) {
+        setIsEdit(true);
+        setTimeout(() => {
+          inputRef.current.focus();
+        }, 100);
+      }
+      setLastTap(null);
+    }
+  };
+
   const swipeFromRight = (id) => {
     return (
       <Button
@@ -30,6 +63,7 @@ const SwipeableContainer = ({ todo, todos, setTodos }) => {
       </Button>
     );
   };
+
   return (
     <Swipeable
       key={todo.id}
@@ -44,11 +78,12 @@ const SwipeableContainer = ({ todo, todos, setTodos }) => {
       }}
     >
       <Hoverable
+        onPress={handleDoubleTap}
         px="$6"
-        flexDirection="row"
-        // h="$10"
         py="$2"
-        bg={isOpen ? "$backgroundDark700" : "$backgroundDark900"}
+        minHeight={38}
+        flexDirection="row"
+        bg={isOpen ? "$backgroundDark700" : "backgroundDark900"}
         key={todo.id}
         alignItems="center"
       >
@@ -57,17 +92,35 @@ const SwipeableContainer = ({ todo, todos, setTodos }) => {
           checked={todo.completed}
           onChange={() => toggleCheckbox(todo.id)}
         />
-        <Txt
-          textDecorationLine={todo.completed ? "line-through" : "none"}
-          color="$textDark50"
-          ml="$2"
-          w="$full"
-          lineHeight="$md"
-          fontSize="$sm"
-          fontWeight="$normal"
-        >
-          {todo.task}
-        </Txt>
+
+        {!isEdit ? (
+          <Txt
+            textDecorationLine={todo.completed ? "line-through" : "none"}
+            color="$textDark50"
+            ml="$2"
+            w="$full"
+            lineHeight="$md"
+            fontSize="$sm"
+            fontWeight="$normal"
+          >
+            {editItem}
+          </Txt>
+        ) : (
+          <Input
+            h="$22"
+            pl="$2"
+            color="$textDark50"
+            value={editItem}
+            placeholder=""
+            onChangeText={(val) => {
+              setEditItem(val);
+            }}
+            onSubmitEditing={() => {
+              handleEdit(todo.id);
+            }}
+            ref={inputRef}
+          />
+        )}
       </Hoverable>
     </Swipeable>
   );

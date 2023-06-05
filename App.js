@@ -19,12 +19,11 @@ const RootView = styled(GestureHandlerRootView, {});
 const App = () => {
   const [item, setItem] = useState("");
   const [todos, setTodos] = useState(defaultTodos);
+  const [newTask, setNewTask] = useState(false);
+
   const inputRef = useRef(null);
-  useEffect(() => {
-    inputRef.current.focus();
-  }, []);
+
   const addTodo = () => {
-    inputRef.current.focus();
     if (item != "") {
       setTodos([
         ...todos,
@@ -35,9 +34,10 @@ const App = () => {
         },
       ]);
       setItem("");
+      setNewTask(false);
     }
   };
-
+  console.log("new task is ", newTask);
   return (
     <StyledProvider config={config}>
       <RootView w="$full">
@@ -89,26 +89,40 @@ const App = () => {
                   todo={todo}
                   todos={todos}
                   setTodos={setTodos}
+                  imputRef={inputRef}
                 />
               ))}
             </VStack>
             <VStack px="$6">
-              <HStack alignItems="center" py="$2">
-                <Checkbox />
-                <Input
-                  h="$22"
-                  pl="$2"
-                  color="$textDark50"
-                  value={item}
-                  placeholder=""
-                  onChangeText={(val) => {
-                    setItem(val);
-                  }}
-                  ref={inputRef}
-                />
-              </HStack>
+              {newTask ? (
+                <HStack alignItems="center" py="$2">
+                  <Checkbox />
+                  <Input
+                    h="$22"
+                    pl="$2"
+                    color="$textDark50"
+                    value={item}
+                    placeholder=""
+                    onChangeText={(val) => {
+                      setItem(val);
+                    }}
+                    onSubmitEditing={() => {
+                      console.log("this is keydown");
+                      addTodo();
+                    }}
+                    ref={inputRef}
+                  />
+                </HStack>
+              ) : null}
 
-              <Button onPress={addTodo}>
+              <Button
+                onPress={() => {
+                  if (!newTask) setNewTask(true);
+                  setTimeout(() => {
+                    inputRef.current.focus();
+                  }, 100);
+                }}
+              >
                 <HStack alignItems="center" h="$5" mt="$4">
                   <AntDesignIcon name="plus" size={14} color="#737373" />
                   <Txt ml="$2" fontSize="$sm">

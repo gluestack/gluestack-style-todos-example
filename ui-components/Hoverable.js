@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { styled } from "@dank-style/react";
-import { Pressable } from "react-native";
-const StyledPressable = styled(Pressable, {});
+import StyledPressable from "./StyledPressable";
+
 const Hoverable = ({ children, ...props }) => {
   const [hover, setHover] = useState(false);
   return (
