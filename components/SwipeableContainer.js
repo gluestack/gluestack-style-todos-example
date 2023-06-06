@@ -5,10 +5,7 @@ import Txt from "../ui-components/Txt";
 import { Swipeable } from "react-native-gesture-handler";
 import Button from "../ui-components/Button";
 import EvilIconsIcon from "react-native-vector-icons/EvilIcons";
-import StyledPressable from "../ui-components/StyledPressable";
-import HStack from "../ui-components/HStack";
 import Input from "../ui-components/Input";
-import Box from "../ui-components/Box";
 const SwipeableContainer = ({ todo, todos, setTodos }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [lastTap, setLastTap] = useState(null);
@@ -53,7 +50,7 @@ const SwipeableContainer = ({ todo, todos, setTodos }) => {
   const swipeFromRight = (id) => {
     return (
       <Button
-        h="$full"
+        h="100%"
         p="$3"
         bg="$error900"
         borderRightRadius="$md"
@@ -98,7 +95,7 @@ const SwipeableContainer = ({ todo, todos, setTodos }) => {
             textDecorationLine={todo.completed ? "line-through" : "none"}
             color="$textDark50"
             ml="$2"
-            w="$full"
+            w="100%"
             lineHeight="$md"
             fontSize="$sm"
             fontWeight="$normal"
@@ -107,7 +104,7 @@ const SwipeableContainer = ({ todo, todos, setTodos }) => {
           </Txt>
         ) : (
           <Input
-            h="$22"
+            minHeight={22}
             pl="$2"
             color="$textDark50"
             value={editItem}

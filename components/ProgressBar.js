@@ -10,7 +10,7 @@ const ProgressBar = ({ totalTasks, completedTasks }) => {
   };
 
   return (
-    <HStack w="%full">
+    <HStack w="100%">
       <Box flex={1} h="$1" bg="$backgroundDark700" borderRadius="$md">
         <Box
           h="100%"

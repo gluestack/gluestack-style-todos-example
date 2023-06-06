@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import { styled, StyledProvider } from "@dank-style/react";
-import { config } from "./dank.config";
+import { styled, StyledProvider } from "@gluestack-style/react";
+import { SafeAreaView } from "react-native";
+import { config } from "./gluestack-style.config";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
 import Box from "./ui-components/Box";
 import Button from "./ui-components/Button";
@@ -16,6 +17,7 @@ import defaultTodos from "./utils/defaultTodos";
 import getDay from "./utils/getDay";
 import getCompletedTasks from "./utils/getCompletedTasks";
 const RootView = styled(GestureHandlerRootView, {});
+const StyledSafeArea = styled(SafeAreaView, {});
 const App = () => {
   const [item, setItem] = useState("");
   const [todos, setTodos] = useState(defaultTodos);
@@ -37,11 +39,14 @@ const App = () => {
       setNewTask(false);
     }
   };
-  console.log("new task is ", newTask);
+
   return (
     <StyledProvider config={config}>
-      <RootView w="$full">
-        <Box
+      <StyledSafeArea bg="#000000" w="100%">
+        <RootView
+          bg="#000000"
+          w="100%"
+          minHeight="100%"
           sx={{
             "@base": {
               bg: "$backgroundDark900",
@@ -52,15 +57,14 @@ const App = () => {
               bg: "$black",
             },
           }}
-          h="$full"
         >
           <Box
             borderRadius="$sm"
             py="$7"
             sx={{
               "@base": {
-                h: "%full",
-                w: "$full",
+                // h: "100%",
+                w: "100%",
               },
               "@md": {
                 w: 700,
@@ -95,10 +99,10 @@ const App = () => {
             </VStack>
             <VStack px="$6">
               {newTask ? (
-                <HStack alignItems="center" py="$2">
+                <HStack minHeight={38} alignItems="center" py="$2">
                   <Checkbox />
                   <Input
-                    h="$22"
+                    h={22}
                     pl="$2"
                     color="$textDark50"
                     value={item}
@@ -107,7 +111,6 @@ const App = () => {
                       setItem(val);
                     }}
                     onSubmitEditing={() => {
-                      console.log("this is keydown");
                       addTodo();
                     }}
                     ref={inputRef}
@@ -132,8 +135,8 @@ const App = () => {
               </Button>
             </VStack>
           </Box>
-        </Box>
-      </RootView>
+        </RootView>
+      </StyledSafeArea>
     </StyledProvider>
   );
 };

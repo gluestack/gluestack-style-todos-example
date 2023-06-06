@@ -760,6 +760,6 @@ export const config = {
 
   type Config = typeof config;
 
-  declare module "@dank-style/react" {
+  declare module "@gluestack-style/react" {
     interface ICustomConfig extends Config {}
   }

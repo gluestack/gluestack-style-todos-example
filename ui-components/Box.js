@@ -1,6 +1,6 @@
 import { View } from "react-native";
-import { styled } from "@dank-style/react";
+import { styled } from "@gluestack-style/react";
 const Box = styled(View, {
-  w: "$full",
+  w: "100%",
 });
 export default Box;

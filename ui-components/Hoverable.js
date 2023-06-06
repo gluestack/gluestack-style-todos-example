@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { styled } from "@dank-style/react";
+import { styled } from "@gluestack-style/react";
 import StyledPressable from "./StyledPressable";
 
 const Hoverable = ({ children, ...props }) => {

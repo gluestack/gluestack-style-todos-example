@@ -1,8 +1,8 @@
-import { styled } from "@dank-style/react";
+import { styled } from "@gluestack-style/react";
 import { View } from "react-native";
 const HStack = styled(View, {
   flexDirection: "row",
   alignItems: "center",
-  w: "$full",
+  w: "100%",
 });
 export default HStack;
