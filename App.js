@@ -10,6 +10,7 @@ import Txt from "./ui-components/Txt";
 import Checkbox from "./ui-components/Checkbox";
 import HStack from "./ui-components/HStack";
 import VStack from "./ui-components/VStack";
+import StyledScrollView from "./ui-components/StyleScrollView";
 import ProgressBar from "./components/ProgressBar";
 import SwipeableContainer from "./components/SwipeableContainer";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -42,15 +43,11 @@ const App = () => {
 
   return (
     <StyledProvider config={config}>
-      <StyledSafeArea bg="#000000" w="100%">
+      <StyledSafeArea bg="$black" w="100%">
         <RootView
-          bg="#000000"
           w="100%"
           minHeight="100%"
           sx={{
-            "@base": {
-              bg: "$backgroundDark900",
-            },
             "@md": {
               justifyContent: "center",
               alignItems: "center",
@@ -58,20 +55,21 @@ const App = () => {
             },
           }}
         >
-          <Box
-            borderRadius="$sm"
-            py="$7"
+          <StyledScrollView
+            pt="$6"
+            pb="$10"
+            bg="$backgroundDark900"
             sx={{
               "@base": {
-                // h: "100%",
                 w: "100%",
+                //   height: "100%",
               },
               "@md": {
                 w: 700,
-                bg: "$backgroundDark900",
+                maxHeight: 500,
+                borderRadius: "$sm",
               },
             }}
-            overflowY="auto"
             flexDirection="column"
           >
             <VStack px="$6">
@@ -119,6 +117,12 @@ const App = () => {
               ) : null}
 
               <Button
+                mb="$32"
+                sx={{
+                  "@md": {
+                    mb: 0,
+                  },
+                }}
                 onPress={() => {
                   if (!newTask) setNewTask(true);
                   setTimeout(() => {
@@ -126,7 +130,7 @@ const App = () => {
                   }, 100);
                 }}
               >
-                <HStack alignItems="center" h="$5" mt="$4">
+                <HStack alignItems="center" h="$5">
                   <AntDesignIcon name="plus" size={14} color="#737373" />
                   <Txt ml="$2" fontSize="$sm">
                     Add Task
@@ -134,7 +138,7 @@ const App = () => {
                 </HStack>
               </Button>
             </VStack>
-          </Box>
+          </StyledScrollView>
         </RootView>
       </StyledSafeArea>
     </StyledProvider>

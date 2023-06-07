@@ -24,7 +24,6 @@ const SwipeableContainer = ({ todo, todos, setTodos }) => {
   };
   const handleEdit = (id) => {
     setIsEdit(false);
-    console.log("isEdit value", isEdit);
     if (editItem != "") {
       const updatedTodos = todos.map((todo) =>
         todo.id === id ? { ...todo, item: editItem } : todo
