@@ -6,12 +6,25 @@ import { Swipeable } from "react-native-gesture-handler";
 import Button from "../ui-components/Button";
 import EvilIconsIcon from "react-native-vector-icons/EvilIcons";
 import Input from "../ui-components/Input";
-const SwipeableContainer = ({ todo, todos, setTodos }) => {
+const SwipeableContainer = ({
+  todo,
+  todos,
+  setTodos,
+  swipedItemId,
+  setSwipedItemId,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [lastTap, setLastTap] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const [editItem, setEditItem] = useState(todo.task);
+  const swipeableRef = useRef(null);
   const inputRef = useRef(null);
+  useEffect(() => {
+    if (swipedItemId !== null && swipedItemId !== todo.id) {
+      swipeableRef.current.close();
+    }
+  });
+
   const handleDelete = (id) => {
     const updatedTodos = todos.filter((todo) => todo.id !== id);
     setTodos(updatedTodos);
@@ -45,15 +58,26 @@ const SwipeableContainer = ({ todo, todos, setTodos }) => {
       setLastTap(null);
     }
   };
+  const handleSwipeStart = () => {
+    if (todo.id !== swipedItemId) setSwipedItemId(todo.id);
+    setIsOpen(true);
+  };
 
-  const swipeFromRight = (id) => {
+  const handleSwipeClose = () => {
+    setSwipedItemId(null);
+    setIsOpen(false);
+  };
+  const renderRightActions = (progress, dragX) => {
+    if (swipedItemId !== null && swipedItemId !== todo.id) {
+      return null;
+    }
     return (
       <Button
         h="100%"
         p="$3"
         bg="$error900"
         borderRightRadius="$md"
-        onPress={() => handleDelete(id)}
+        onPress={() => handleDelete(todo.id)}
       >
         <EvilIconsIcon name="trash" size={18} color="white" />
       </Button>
@@ -63,15 +87,11 @@ const SwipeableContainer = ({ todo, todos, setTodos }) => {
   return (
     <Swipeable
       key={todo.id}
-      onSwipeableOpen={(side) => {
-        setIsOpen(true);
-      }}
-      onSwipeableClose={(side) => {
-        setIsOpen(false);
-      }}
-      renderRightActions={() => {
-        return swipeFromRight(todo.id);
-      }}
+      onSwipeableWillOpen={handleSwipeStart}
+      onSwipeableWillClose={handleSwipeClose}
+      renderRightActions={renderRightActions}
+      ref={swipeableRef}
+      friction={1}
     >
       <Hoverable
         onPress={handleDoubleTap}
@@ -79,7 +99,7 @@ const SwipeableContainer = ({ todo, todos, setTodos }) => {
         py="$2"
         minHeight={38}
         flexDirection="row"
-        bg={isOpen ? "$backgroundDark700" : "backgroundDark900"}
+        bg={isOpen ? "$backgroundDark700" : "$backgroundDark900"}
         key={todo.id}
         alignItems="center"
       >

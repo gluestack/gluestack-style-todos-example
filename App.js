@@ -23,7 +23,7 @@ const App = () => {
   const [item, setItem] = useState("");
   const [todos, setTodos] = useState(defaultTodos);
   const [newTask, setNewTask] = useState(false);
-
+  const [swipedItemId, setSwipedItemId] = useState(null);
   const inputRef = useRef(null);
 
   const addTodo = () => {
@@ -91,6 +91,8 @@ const App = () => {
                   todo={todo}
                   todos={todos}
                   setTodos={setTodos}
+                  swipedItemId={swipedItemId}
+                  setSwipedItemId={setSwipedItemId}
                   imputRef={inputRef}
                 />
               ))}
