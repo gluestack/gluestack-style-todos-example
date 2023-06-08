@@ -6,6 +6,7 @@ import { Swipeable } from "react-native-gesture-handler";
 import Button from "../ui-components/Button";
 import EvilIconsIcon from "react-native-vector-icons/EvilIcons";
 import Input from "../ui-components/Input";
+
 const SwipeableContainer = ({
   todo,
   todos,
@@ -34,7 +35,6 @@ const SwipeableContainer = ({
     setTodos(updatedTodos);
   };
   const handleEdit = (id) => {
-    setEditItemId(null);
     if (editItem != "") {
       const updatedTodos = todos.map((todo) =>
         todo.id === id ? { ...todo, item: editItem } : todo
