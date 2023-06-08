@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Hoverable from "../ui-components/Hoverable";
 import Checkbox from "../ui-components/Checkbox";
-import Txt from "../ui-components/Txt";
 import { Swipeable } from "react-native-gesture-handler";
 import Button from "../ui-components/Button";
 import EvilIconsIcon from "react-native-vector-icons/EvilIcons";
@@ -57,6 +56,7 @@ const SwipeableContainer = ({
     }
     return (
       <Button
+        zIndex={9999}
         h="100%"
         p="$3"
         bg="$error900"
@@ -92,6 +92,7 @@ const SwipeableContainer = ({
           onChange={() => toggleCheckbox(todo.id)}
         />
         <Input
+          editable={!isOpen}
           minHeight={22}
           pl="$2"
           color="$textDark50"

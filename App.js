@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { styled, StyledProvider } from "@gluestack-style/react";
 import { KeyboardAvoidingView, SafeAreaView } from "react-native";
 import { config } from "./gluestack-style.config";
+import shortid from "shortid";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
 import Button from "./ui-components/Button";
 import Input from "./ui-components/Input";
@@ -24,6 +25,7 @@ const App = () => {
   const [todos, setTodos] = useState(defaultTodos);
   const [swipedItemId, setSwipedItemId] = useState(null);
   const [lastItemSelected, setLastItemSelected] = useState(false);
+  const [newTask, setNewTask] = useState(true);
   const inputRef = useRef(null);
 
   const addTodo = () => {
@@ -31,7 +33,7 @@ const App = () => {
       setTodos([
         ...todos,
         {
-          id: Math.random(),
+          id: shortid.generate(),
           task: item,
           completed: lastItemSelected,
         },
@@ -137,6 +139,7 @@ const App = () => {
                     ref={inputRef}
                   />
                 </HStack>
+
                 <Button
                   mb="$32"
                   sx={{
@@ -151,7 +154,7 @@ const App = () => {
                     }, 100);
                   }}
                 >
-                  <HStack alignItems="center" h="$5">
+                  <HStack alignItems="center" mt="$4">
                     <AntDesignIcon name="plus" size={14} color="#737373" />
                     <Txt ml="$2" fontSize="$sm">
                       Add Task
