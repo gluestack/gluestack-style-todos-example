@@ -12,10 +12,11 @@ const SwipeableContainer = ({
   setTodos,
   swipedItemId,
   setSwipedItemId,
+  editItemId,
+  setEditItemId,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [lastTap, setLastTap] = useState(null);
-  const [isEdit, setIsEdit] = useState(false);
   const [editItem, setEditItem] = useState(todo.task);
   const swipeableRef = useRef(null);
   const inputRef = useRef(null);
@@ -36,7 +37,7 @@ const SwipeableContainer = ({
     setTodos(updatedTodos);
   };
   const handleEdit = (id) => {
-    setIsEdit(false);
+    setEditItemId(null);
     if (editItem != "") {
       const updatedTodos = todos.map((todo) =>
         todo.id === id ? { ...todo, item: editItem } : todo
@@ -50,7 +51,7 @@ const SwipeableContainer = ({
       setLastTap(now);
     } else {
       if (now - lastTap < 700) {
-        setIsEdit(true);
+        setEditItemId(todo.id);
         setTimeout(() => {
           inputRef.current.focus();
         }, 100);
@@ -109,7 +110,7 @@ const SwipeableContainer = ({
           onChange={() => toggleCheckbox(todo.id)}
         />
 
-        {!isEdit ? (
+        {editItemId !== null && editItemId !== todo.id ? (
           <Txt
             textDecorationLine={todo.completed ? "line-through" : "none"}
             color="$textDark50"

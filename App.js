@@ -21,7 +21,7 @@ const StyledSafeArea = styled(SafeAreaView, {});
 const App = () => {
   const [item, setItem] = useState("");
   const [todos, setTodos] = useState(defaultTodos);
-
+  const [editItemId, setEditItemId] = useState(null);
   const [swipedItemId, setSwipedItemId] = useState(null);
   const [lastItemSelected, setLastItemSelected] = useState(false);
   const inputRef = useRef(null);
@@ -93,6 +93,8 @@ const App = () => {
                   setTodos={setTodos}
                   swipedItemId={swipedItemId}
                   setSwipedItemId={setSwipedItemId}
+                  editItemId={editItemId}
+                  setEditItemId={setEditItemId}
                   imputRef={inputRef}
                 />
               ))}
