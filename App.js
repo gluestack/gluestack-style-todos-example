@@ -3,7 +3,6 @@ import { styled, StyledProvider } from "@gluestack-style/react";
 import { SafeAreaView } from "react-native";
 import { config } from "./gluestack-style.config";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
-import Box from "./ui-components/Box";
 import Button from "./ui-components/Button";
 import Input from "./ui-components/Input";
 import Txt from "./ui-components/Txt";
@@ -22,8 +21,9 @@ const StyledSafeArea = styled(SafeAreaView, {});
 const App = () => {
   const [item, setItem] = useState("");
   const [todos, setTodos] = useState(defaultTodos);
-  const [newTask, setNewTask] = useState(false);
+
   const [swipedItemId, setSwipedItemId] = useState(null);
+  const [lastItemSelected, setLastItemSelected] = useState(false);
   const inputRef = useRef(null);
 
   const addTodo = () => {
@@ -33,11 +33,11 @@ const App = () => {
         {
           id: Math.random(),
           task: item,
-          completed: false,
+          completed: lastItemSelected,
         },
       ]);
       setItem("");
-      setNewTask(false);
+      setLastItemSelected(false);
     }
   };
 
@@ -78,8 +78,8 @@ const App = () => {
               </Txt>
               <HStack my="$4" alignItems="center">
                 <ProgressBar
-                  completedTasks={getCompletedTasks(todos)}
-                  totalTasks={todos.length}
+                  completedTasks={getCompletedTasks(todos, lastItemSelected)}
+                  totalTasks={todos.length + 1}
                 />
               </HStack>
             </VStack>
@@ -98,26 +98,29 @@ const App = () => {
               ))}
             </VStack>
             <VStack px="$6">
-              {newTask ? (
-                <HStack minHeight={38} alignItems="center" py="$2">
-                  <Checkbox />
-                  <Input
-                    h={22}
-                    pl="$2"
-                    color="$textDark50"
-                    value={item}
-                    placeholder=""
-                    onChangeText={(val) => {
-                      setItem(val);
-                    }}
-                    onSubmitEditing={() => {
-                      addTodo();
-                    }}
-                    ref={inputRef}
-                  />
-                </HStack>
-              ) : null}
-
+              <HStack minHeight={38} alignItems="center" py="$2">
+                <Checkbox
+                  checked={lastItemSelected}
+                  onChange={() => setLastItemSelected(!lastItemSelected)}
+                />
+                <Input
+                  h={22}
+                  pl="$2"
+                  color="$textDark50"
+                  value={item}
+                  placeholder=""
+                  textDecorationLine={
+                    lastItemSelected ? "line-through" : "none"
+                  }
+                  onChangeText={(val) => {
+                    setItem(val);
+                  }}
+                  onSubmitEditing={() => {
+                    addTodo();
+                  }}
+                  ref={inputRef}
+                />
+              </HStack>
               <Button
                 mb="$32"
                 sx={{
@@ -126,7 +129,7 @@ const App = () => {
                   },
                 }}
                 onPress={() => {
-                  if (!newTask) setNewTask(true);
+                  addTodo();
                   setTimeout(() => {
                     inputRef.current.focus();
                   }, 100);
