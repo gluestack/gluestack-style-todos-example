@@ -39,9 +39,6 @@ const App = () => {
       setItem("");
       setLastItemSelected(false);
     }
-    setTimeout(() => {
-      inputRef.current.focus();
-    }, 100);
   };
 
   return (
@@ -147,7 +144,12 @@ const App = () => {
                       mb: 0,
                     },
                   }}
-                  onPress={addTodo}
+                  onPress={() => {
+                    addTodo();
+                    setTimeout(() => {
+                      inputRef.current.focus();
+                    }, 100);
+                  }}
                 >
                   <HStack alignItems="center" h="$5">
                     <AntDesignIcon name="plus" size={14} color="#737373" />
