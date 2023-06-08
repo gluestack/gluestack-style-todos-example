@@ -4,19 +4,19 @@ import { KeyboardAvoidingView, SafeAreaView } from "react-native";
 import { config } from "./gluestack-style.config";
 import shortid from "shortid";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
-import Button from "./ui-components/Button";
-import Input from "./ui-components/Input";
-import Txt from "./ui-components/Txt";
-import Checkbox from "./ui-components/Checkbox";
-import HStack from "./ui-components/HStack";
-import VStack from "./ui-components/VStack";
-import StyledScrollView from "./ui-components/StyleScrollView";
+import {
+  HStack,
+  VStack,
+  Checkbox,
+  Input,
+  Button,
+  Txt,
+  StyledScrollView,
+} from "./ui-components";
 import ProgressBar from "./components/ProgressBar";
 import SwipeableContainer from "./components/SwipeableContainer";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import defaultTodos from "./utils/defaultTodos";
-import getDay from "./utils/getDay";
-import getCompletedTasks from "./utils/getCompletedTasks";
+import { getCompletedTasks, getDay, defaultTodos } from "./utils";
 const RootView = styled(GestureHandlerRootView, {});
 const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView, {});
 const StyledSafeArea = styled(SafeAreaView, {});

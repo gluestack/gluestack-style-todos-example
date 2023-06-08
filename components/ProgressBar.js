@@ -1,6 +1,5 @@
-import HStack from "../ui-components/HStack";
-import Box from "../ui-components/Box";
-import Txt from "../ui-components/Txt";
+import { HStack, Txt, Box } from "../ui-components";
+
 const ProgressBar = ({ totalTasks, completedTasks }) => {
   const getProgress = () => {
     if (totalTasks === 0) {

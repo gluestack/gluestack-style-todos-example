@@ -1,11 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import Hoverable from "../ui-components/Hoverable";
-import Checkbox from "../ui-components/Checkbox";
-import Txt from "../ui-components/Txt";
+import { Checkbox, Input, Hoverable, Button, Txt } from "../ui-components";
 import { Swipeable } from "react-native-gesture-handler";
-import Button from "../ui-components/Button";
 import EvilIconsIcon from "react-native-vector-icons/EvilIcons";
-import Input from "../ui-components/Input";
 
 const SwipeableContainer = ({
   todo,
@@ -19,16 +15,12 @@ const SwipeableContainer = ({
   const [isOpen, setIsOpen] = useState(false);
   const [lastTap, setLastTap] = useState(null);
   const [editItem, setEditItem] = useState(todo.task);
-  const [notEditing, setIsEditting] = useState(true);
   const swipeableRef = useRef(null);
   const inputRef = useRef(null);
   useEffect(() => {
     if (swipedItemId !== null && swipedItemId !== todo.id) {
       swipeableRef.current.close();
     }
-    // if (editItemId !== null && editItemId !== todo.id) {
-    //   setIsEditting(true);
-    // }
   });
 
   const handleDelete = (id) => {
@@ -52,7 +44,6 @@ const SwipeableContainer = ({
   };
   const handleDoubleTap = () => {
     const now = Date.now();
-    console.log("double tap ");
     if (!lastTap) {
       setLastTap(now);
     } else {
