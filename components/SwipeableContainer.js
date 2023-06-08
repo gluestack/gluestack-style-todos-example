@@ -12,11 +12,8 @@ const SwipeableContainer = ({
   setTodos,
   swipedItemId,
   setSwipedItemId,
-  editItemId,
-  setEditItemId,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [lastTap, setLastTap] = useState(null);
   const [editItem, setEditItem] = useState(todo.task);
   const swipeableRef = useRef(null);
   const inputRef = useRef(null);
@@ -43,20 +40,6 @@ const SwipeableContainer = ({
         todo.id === id ? { ...todo, item: editItem } : todo
       );
       setTodos(updatedTodos);
-    }
-  };
-  const handleDoubleTap = () => {
-    const now = Date.now();
-    if (!lastTap) {
-      setLastTap(now);
-    } else {
-      if (now - lastTap < 700) {
-        setEditItemId(todo.id);
-        setTimeout(() => {
-          inputRef.current.focus();
-        }, 100);
-      }
-      setLastTap(null);
     }
   };
   const handleSwipeStart = () => {
@@ -95,7 +78,6 @@ const SwipeableContainer = ({
       friction={1}
     >
       <Hoverable
-        onPress={handleDoubleTap}
         px="$6"
         py="$2"
         minHeight={38}
@@ -109,35 +91,21 @@ const SwipeableContainer = ({
           checked={todo.completed}
           onChange={() => toggleCheckbox(todo.id)}
         />
-
-        {editItemId !== null && editItemId !== todo.id ? (
-          <Txt
-            textDecorationLine={todo.completed ? "line-through" : "none"}
-            color="$textDark50"
-            ml="$2"
-            w="100%"
-            lineHeight="$md"
-            fontSize="$sm"
-            fontWeight="$normal"
-          >
-            {editItem}
-          </Txt>
-        ) : (
-          <Input
-            minHeight={22}
-            pl="$2"
-            color="$textDark50"
-            value={editItem}
-            placeholder=""
-            onChangeText={(val) => {
-              setEditItem(val);
-            }}
-            onSubmitEditing={() => {
-              handleEdit(todo.id);
-            }}
-            ref={inputRef}
-          />
-        )}
+        <Input
+          minHeight={22}
+          pl="$2"
+          color="$textDark50"
+          value={editItem}
+          textDecorationLine={todo.completed ? "line-through" : "none"}
+          placeholder=""
+          onChangeText={(val) => {
+            setEditItem(val);
+          }}
+          onSubmitEditing={() => {
+            handleEdit(todo.id);
+          }}
+          ref={inputRef}
+        />
       </Hoverable>
     </Swipeable>
   );

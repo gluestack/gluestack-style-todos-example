@@ -21,7 +21,6 @@ const StyledSafeArea = styled(SafeAreaView, {});
 const App = () => {
   const [item, setItem] = useState("");
   const [todos, setTodos] = useState(defaultTodos);
-  const [editItemId, setEditItemId] = useState(null);
   const [swipedItemId, setSwipedItemId] = useState(null);
   const [lastItemSelected, setLastItemSelected] = useState(false);
   const inputRef = useRef(null);
@@ -39,6 +38,9 @@ const App = () => {
       setItem("");
       setLastItemSelected(false);
     }
+    setTimeout(() => {
+      inputRef.current.focus();
+    }, 100);
   };
 
   return (
@@ -62,7 +64,6 @@ const App = () => {
             sx={{
               "@base": {
                 w: "100%",
-                //   height: "100%",
               },
               "@md": {
                 w: 700,
@@ -93,8 +94,6 @@ const App = () => {
                   setTodos={setTodos}
                   swipedItemId={swipedItemId}
                   setSwipedItemId={setSwipedItemId}
-                  editItemId={editItemId}
-                  setEditItemId={setEditItemId}
                   imputRef={inputRef}
                 />
               ))}
@@ -117,9 +116,7 @@ const App = () => {
                   onChangeText={(val) => {
                     setItem(val);
                   }}
-                  onSubmitEditing={() => {
-                    addTodo();
-                  }}
+                  onSubmitEditing={addTodo}
                   ref={inputRef}
                 />
               </HStack>
@@ -130,12 +127,7 @@ const App = () => {
                     mb: 0,
                   },
                 }}
-                onPress={() => {
-                  addTodo();
-                  setTimeout(() => {
-                    inputRef.current.focus();
-                  }, 100);
-                }}
+                onPress={addTodo}
               >
                 <HStack alignItems="center" h="$5">
                   <AntDesignIcon name="plus" size={14} color="#737373" />
