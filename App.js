@@ -25,7 +25,7 @@ const App = () => {
   const [todos, setTodos] = useState(defaultTodos);
   const [swipedItemId, setSwipedItemId] = useState(null);
   const [lastItemSelected, setLastItemSelected] = useState(false);
-  const [newTask, setNewTask] = useState(true);
+  const [editItemId, setEditItemId] = useState(null);
   const inputRef = useRef(null);
 
   const addTodo = () => {
@@ -112,6 +112,8 @@ const App = () => {
                     setTodos={setTodos}
                     swipedItemId={swipedItemId}
                     setSwipedItemId={setSwipedItemId}
+                    editItemId={editItemId}
+                    setEditItemId={setEditItemId}
                     imputRef={inputRef}
                   />
                 ))}
