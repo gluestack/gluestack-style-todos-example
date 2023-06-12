@@ -1,6 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import { styled, StyledProvider } from "@gluestack-style/react";
-import { KeyboardAvoidingView, SafeAreaView } from "react-native";
+import React, { useState, useRef } from "react";
+import { StyledProvider } from "@gluestack-style/react";
 import { config } from "./gluestack-style.config";
 import shortid from "shortid";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
@@ -11,15 +10,13 @@ import {
   Input,
   Button,
   Txt,
+  StyledSafeAreaView,
   StyledScrollView,
+  StyledKeyboardAvoidingView,
+  StyledGestureHandlerRootView,
 } from "./ui-components";
-import ProgressBar from "./components/ProgressBar";
-import SwipeableContainer from "./components/SwipeableContainer";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { ProgressBar, SwipeableContainer } from "./components";
 import { getCompletedTasks, getDay, defaultTodos } from "./utils";
-const RootView = styled(GestureHandlerRootView, {});
-const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView, {});
-const StyledSafeArea = styled(SafeAreaView, {});
 const App = () => {
   const [item, setItem] = useState("");
   const [todos, setTodos] = useState(defaultTodos);
@@ -27,7 +24,6 @@ const App = () => {
   const [lastItemSelected, setLastItemSelected] = useState(false);
   const [editItemId, setEditItemId] = useState(null);
   const inputRef = useRef(null);
-
   const addTodo = () => {
     if (item != "") {
       setTodos([
@@ -52,7 +48,7 @@ const App = () => {
         behavior="padding"
         keyboardVerticalOffset={60}
       >
-        <StyledSafeArea
+        <StyledSafeAreaView
           sx={{
             "@base": {
               bg: "backgroundDark900",
@@ -64,7 +60,7 @@ const App = () => {
           w="100%"
           h="100%"
         >
-          <RootView
+          <StyledGestureHandlerRootView
             w="100%"
             minHeight="100%"
             sx={{
@@ -165,8 +161,8 @@ const App = () => {
                 </Button>
               </VStack>
             </StyledScrollView>
-          </RootView>
-        </StyledSafeArea>
+          </StyledGestureHandlerRootView>
+        </StyledSafeAreaView>
       </StyledKeyboardAvoidingView>
     </StyledProvider>
   );

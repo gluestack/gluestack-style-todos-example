@@ -7,6 +7,9 @@ import Button from "./Button";
 import Txt from "./Txt";
 import Box from "./Box";
 import StyledPressable from "./StyledPressable";
+import StyledSafeAreaView from "./StyledSafeAreaView";
+import StyledKeyboardAvoidingView from "./StyledKeyboardAvoidingView";
+import StyledGestureHandlerRootView from "./StyledGestureHandlerRootView";
 import StyledScrollView from "./StyleScrollView";
 export {
   HStack,
@@ -18,5 +21,8 @@ export {
   Txt,
   Box,
   StyledPressable,
+  StyledSafeAreaView,
+  StyledKeyboardAvoidingView,
+  StyledGestureHandlerRootView,
   StyledScrollView,
 };
