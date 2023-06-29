@@ -1,5 +1,8 @@
 # gluestack-style-todos-example
 This todo-app has been built by using gluestack-style, this app demonstrates how we can use gluestack-style to build our app efficient and scalable way.
+
+![todoapp-gif](https://github.com/gluestack/gluestack-style-todos-example/assets/108334845/4c54b730-64f4-47f5-a7bb-3607456f8f2b)
+
 # Installation 
 Clone the repo by 
 ```sh
@@ -42,3 +45,6 @@ or if you use yarn then
 ```sh
 $ yarn android
 ```
+# Documentation
+
+It's the https://style.gluestack.io/ website for the latest version of gluestack-style.
